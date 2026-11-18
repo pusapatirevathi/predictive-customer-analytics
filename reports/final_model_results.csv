@@ -1,0 +1,2 @@
+model,training_records,testing_records,roc_auc,average_precision,baseline_positive_rate
+Logistic Regression,46816,64475,0.5999208469875043,0.016325062002117856,0.006793330748352074
