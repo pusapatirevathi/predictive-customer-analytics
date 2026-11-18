@@ -338,3 +338,84 @@ st.caption(
     "Predictive Customer Analytics | "
     "Machine Learning & Multi-Agent AI Project"
 )
+
+# ==========================================
+# STEP 16: Individual Customer Intelligence
+# ==========================================
+
+st.divider()
+
+st.header("Individual Customer Intelligence")
+
+st.markdown(
+    "Select a customer to view their purchase "
+    "behavior, prediction score, and recommended "
+    "marketing action."
+)
+
+# Use customers from the current filters
+customer_ids = sorted(
+    filtered_df["customer_unique_id"]
+    .astype(str)
+    .unique()
+    .tolist()
+)
+
+selected_customer = st.selectbox(
+    "Select Customer ID",
+    options=customer_ids
+)
+
+customer = filtered_df[
+    filtered_df["customer_unique_id"].astype(str)
+    == selected_customer
+].iloc[0]
+
+st.subheader("Customer Profile")
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric(
+    "Purchase Frequency",
+    int(customer["frequency"])
+)
+
+col2.metric(
+    "Recency",
+    f"{int(customer['recency'])} days"
+)
+
+col3.metric(
+    "Customer Tenure",
+    f"{int(customer['customer_tenure'])} days"
+)
+
+st.subheader("Customer Prediction")
+
+st.metric(
+    "Repeat-Purchase Model Score",
+    f"{customer['repeat_purchase_score']:.3f}"
+)
+
+st.caption(
+    "This is a model ranking score, "
+    "not a calibrated purchase probability."
+)
+
+st.subheader("Customer Activity Category")
+
+st.info(
+    customer["activity_category"]
+)
+
+st.subheader("Recommended Marketing Action")
+
+st.success(
+    customer["recommended_action"]
+)
+
+st.caption(
+    "Marketing recommendations are rule-based "
+    "suggestions and have not been experimentally "
+    "validated."
+)
